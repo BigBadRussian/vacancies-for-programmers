@@ -10,7 +10,7 @@ def request_vacancies(search_word: str, user_agent_hh: str):
     pages_number = 1
     vacancies_per_page = 100
     profession_number_hh = '96'
-    vacancy_lifetime_hh = 1
+    vacancy_lifetime_hh = 30
     searching_area_hh = '1'
     vacancies = []
     vacancies_amount = 0
