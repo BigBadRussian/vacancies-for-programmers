@@ -1,25 +1,30 @@
 from __future__ import print_function
+from dotenv import load_dotenv
 from terminaltables import AsciiTable
-from Programmers_Salaries_stats_HH import get_average_salaries_sorted_by_programming_language_hh
-from Programmers_Salaries_stats_SJ import get_average_salaries_sorted_by_programming_language_sj
+from Programmers_Salaries_stats_HH import get_vacancies_statistics_hh
+from Programmers_Salaries_stats_SJ import get_vacancies_statistics_sj
 
 
-def build_table(hr_service_data: dict, title: str):
-    languages = tuple(hr_service_data.keys())
-    table_data = []
+def build_table(hr_service_statistics: dict, title: str):
+    search_words = tuple(hr_service_statistics.keys())
+    table_rows = []
     column_titles = ['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']
-    table_data.append(column_titles)
-    for language in languages:
-        row = [language, hr_service_data[language]['vacancies_found'], hr_service_data[language]['vacancies_processed'],
-               hr_service_data[language]['average_salary']]
-        table_data.append(row)
-    table = AsciiTable(table_data, title)
-    print(table.table)
+    table_rows.append(column_titles)
+    for search_word in search_words:
+        row = [search_word, hr_service_statistics[search_word]['vacancies_amount'],
+                            hr_service_statistics[search_word]['vacancies_processed'],
+                            hr_service_statistics[search_word]['average_salary']]
+        table_rows.append(row)
+    table = AsciiTable(table_rows, title)
+    return table.table
 
 
 def main():
-    build_table(hr_service_data=get_average_salaries_sorted_by_programming_language_hh(), title='HeadHunter Moscow')
-    build_table(hr_service_data=get_average_salaries_sorted_by_programming_language_sj(), title='SuperJob Moscow')
+    load_dotenv()
+    print(build_table(hr_service_statistics=get_vacancies_statistics_hh(),
+                      title='HeadHunter Moscow'),
+          build_table(hr_service_statistics=get_vacancies_statistics_sj(),
+                      title='SuperJob Moscow'))
 
 
 if __name__ == '__main__':
