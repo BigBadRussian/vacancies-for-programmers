@@ -1,5 +1,6 @@
 from itertools import chain
 import requests
+import logging
 
 
 def request_vacancies(search_word: str, user_agent_hh: str):
@@ -24,6 +25,8 @@ def request_vacancies(search_word: str, user_agent_hh: str):
         vacancies.append(page_payload['items'])
         vacancies_amount = page_payload['found']
     response = vacancies, vacancies_amount
+    logging.basicConfig(level=logging.INFO)
+    logging.info('Request HH')
     return response
 
 

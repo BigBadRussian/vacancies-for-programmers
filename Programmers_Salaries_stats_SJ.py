@@ -1,9 +1,9 @@
-import os
 import math
 import requests
 from itertools import chain
 from Programmers_Salaries_stats_HH import calculate_average_salaries
 from Programmers_Salaries_stats_HH import calculate_expected_rub_salaries
+import logging
 
 
 def request_vacancies(app_secret_key_sj: str, search_word: str):
@@ -24,6 +24,8 @@ def request_vacancies(app_secret_key_sj: str, search_word: str):
         pages_number = math.ceil(page_payload['total'] / vacancies_per_page)
         page += 1
         response.append(page_payload['objects'])
+        logging.basicConfig(level=logging.INFO)
+        logging.info('Request SJ')
     return response
 
 
