@@ -1,4 +1,3 @@
-import os
 from itertools import chain
 import requests
 
@@ -73,8 +72,7 @@ def calculate_average_salaries(search_words: list, expected_salaries: dict):
     return average_salaries
 
 
-def get_vacancies_statistics_hh():
-    user_agent_hh = os.environ['USER_AGENT_HH']
+def get_vacancies_statistics_hh(user_agent_hh):
     search_words = ['rust', 'ruby', 'python', 'java_script', 'java', 'c', 'c++', 'c#', 'go']
     currency = 'RUR'
     hh_response_vacancies_amount = {}
