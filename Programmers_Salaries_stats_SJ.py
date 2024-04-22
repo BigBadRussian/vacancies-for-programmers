@@ -40,8 +40,7 @@ def get_vacancies_amount_and_payments(sj_response_vacancies: dict, search_words:
     return payments, vacancies_amount
 
 
-def get_vacancies_statistics_sj():
-    app_secret_key_sj = os.environ['APP_SECRET_KEY_SJ']
+def get_vacancies_statistics_sj(app_secret_key_sj):
     search_words = ['rust', 'ruby', 'python', 'java_script', 'java', 'c', 'c++', 'c#', 'go']
     currency = 'rub'
     vacancies_statistics = {}
