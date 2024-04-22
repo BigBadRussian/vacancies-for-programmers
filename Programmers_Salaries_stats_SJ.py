@@ -24,7 +24,6 @@ def request_vacancies(app_secret_key_sj: str, search_word: str):
         pages_number = math.ceil(page_payload['total'] / vacancies_per_page)
         page += 1
         response.append(page_payload['objects'])
-    print('request SJ')
     return response
 
 

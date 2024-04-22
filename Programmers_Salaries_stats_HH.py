@@ -24,7 +24,6 @@ def request_vacancies(search_word: str, user_agent_hh: str):
         vacancies.append(page_payload['items'])
         vacancies_amount = page_payload['found']
     response = vacancies, vacancies_amount
-    print('request HH')
     return response
 
 
