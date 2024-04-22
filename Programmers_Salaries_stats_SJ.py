@@ -57,8 +57,6 @@ def get_vacancies_statistics_sj(app_secret_key_sj):
                                               'vacancies_processed': len(expected_salaries[search_word]),
                                               'vacancies_amount': vacancies_amount[search_word]}
                                 for search_word, average_salary in zip(search_words, average_salaries)}
-    except requests.ConnectionError as error:
-        print(error)
-    except requests.HTTPError as error:
-        print(error)
+    except requests.ConnectionError:
+        print('Проверьте ваше подключение к сети Интернет')
     return vacancies_statistics
