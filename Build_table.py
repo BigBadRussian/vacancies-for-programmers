@@ -9,14 +9,12 @@ from Programmers_Salaries_stats_SJ import get_vacancies_statistics_sj
 
 
 def build_table(hr_service_statistics: dict, title: str):
-    search_words = tuple(hr_service_statistics.keys())
     table_rows = []
     column_titles = ['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']
     table_rows.append(column_titles)
-    for search_word in search_words:
-        row = [search_word, hr_service_statistics[search_word]['vacancies_amount'],
-                            hr_service_statistics[search_word]['vacancies_processed'],
-                            hr_service_statistics[search_word]['average_salary']]
+    for search_word, statistics in hr_service_statistics.items():
+        row = [search_word]
+        row.extend(list(statistics.values()))
         table_rows.append(row)
     table = AsciiTable(table_rows, title)
     return table.table
