@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import requests
 import logging
 
@@ -29,9 +31,9 @@ def request_vacancies(language: str, user_agent_hh: str):
     return response
 
 
-def calculate_expected_salaries(vacancies):
+def calculate_average_salaries(vacancies):
     currency = 'RUR'
-    expected_salaries = []
+    expected_salaries: list = []
     for vacancy in vacancies:
         if vacancy['salary']:
             payment_from = vacancy['salary']['from']
@@ -47,30 +49,20 @@ def calculate_expected_salaries(vacancies):
                 continue
             if payment_to:
                 expected_salaries.append(0.8 * payment_to)
-    return expected_salaries
-
-
-def calculate_average_salaries(expected_salaries):
-    total_salaries = len(expected_salaries)
-    if total_salaries:
-        average_salary = round(sum(expected_salaries) / total_salaries, 0)
+    vacancies_processed = len(expected_salaries)
+    if vacancies_processed:
+        average_salary = round(sum(expected_salaries) / vacancies_processed, 0)
     else:
         average_salary = 'no vacancies found'
-    return average_salary, total_salaries
+    return average_salary, vacancies_processed
 
 
 def get_vacancies_statistics_hh(user_agent_hh, languages):
-    expected_salaries = {}
-    average_salaries = {}
-    vacancies_amount = {}
-    vacancies_processed = {}
     hr_statistics_hh = {}
     for language in languages:
-        vacancies, vacancies_amount[language] = request_vacancies(language=language, user_agent_hh=user_agent_hh)
-        expected_salaries[language] = calculate_expected_salaries(vacancies)
-        average_salaries[language], vacancies_processed[language] = calculate_average_salaries(
-            expected_salaries[language])
-        hr_statistics_hh[language] = {'vacancies_amount': vacancies_amount[language],
-                                      'vacancies_processed': vacancies_processed[language],
-                                      'average_salary': average_salaries[language]}
+        vacancies, vacancies_amount = request_vacancies(language, user_agent_hh)
+        average_salary, vacancies_processed = calculate_average_salaries(vacancies)
+        hr_statistics_hh[language] = {'vacancies_amount': vacancies_amount,
+                                      'vacancies_processed': vacancies_processed,
+                                      'average_salary': average_salary}
     return hr_statistics_hh
