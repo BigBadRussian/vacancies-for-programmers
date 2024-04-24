@@ -2,14 +2,14 @@ import requests
 import logging
 
 
-def request_vacancies(language: str, user_agent_hh: str):
+def request_vacancies_hh(language: str, user_agent_hh: str):
     url = 'https://api.hh.ru/vacancies'
     headers = {'User-Agent': user_agent_hh}
     page = 0
     pages_number = 1
     vacancies_per_page = 100
     profession_number_hh = '96'
-    vacancy_lifetime_hh = 30
+    vacancy_lifetime_hh = 1
     searching_area_hh = '1'
     vacancies = []
     vacancies_amount = 0
@@ -29,7 +29,7 @@ def request_vacancies(language: str, user_agent_hh: str):
     return response
 
 
-def calculate_average_salaries(vacancies):
+def calculate_average_salaries_hh(vacancies):
     currency = 'RUR'
     expected_salaries: list = []
     for vacancy in vacancies:
@@ -58,8 +58,8 @@ def calculate_average_salaries(vacancies):
 def get_vacancies_statistics_hh(user_agent_hh, languages):
     hr_statistics_hh = {}
     for language in languages:
-        vacancies, vacancies_amount = request_vacancies(language, user_agent_hh)
-        average_salary, vacancies_processed = calculate_average_salaries(vacancies)
+        vacancies, vacancies_amount = request_vacancies_hh(language, user_agent_hh)
+        average_salary, vacancies_processed = calculate_average_salaries_hh(vacancies)
         hr_statistics_hh[language] = {'vacancies_amount': vacancies_amount,
                                       'vacancies_processed': vacancies_processed,
                                       'average_salary': average_salary}
