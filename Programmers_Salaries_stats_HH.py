@@ -32,24 +32,21 @@ def request_vacancies(language: str, user_agent_hh: str):
 def calculate_expected_salaries(vacancies):
     currency = 'RUR'
     expected_salaries = []
-    payments = []
     for vacancy in vacancies:
         if vacancy['salary']:
-            payments.append(vacancy['salary'])
-    for payment in payments:
-        payment_from = payment['from']
-        payment_to = payment['to']
-        payment_currency = payment['currency']
-        if payment_currency != currency:
-            continue
-        if payment_from and payment_to:
-            expected_salaries.append(0.5 * (payment_from + payment_to))
-            continue
-        if payment_from:
-            expected_salaries.append(1.2 * payment_from)
-            continue
-        if payment_to:
-            expected_salaries.append(0.8 * payment_to)
+            payment_from = vacancy['salary']['from']
+            payment_to = vacancy['salary']['to']
+            payment_currency = vacancy['salary']['currency']
+            if payment_currency != currency:
+                continue
+            if payment_from and payment_to:
+                expected_salaries.append(0.5 * (payment_from + payment_to))
+                continue
+            if payment_from:
+                expected_salaries.append(1.2 * payment_from)
+                continue
+            if payment_to:
+                expected_salaries.append(0.8 * payment_to)
     return expected_salaries
 
 
