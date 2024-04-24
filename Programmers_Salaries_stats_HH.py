@@ -34,8 +34,8 @@ def calculate_expected_salaries(vacancies):
     expected_salaries = []
     payments = []
     for vacancy in vacancies:
-        payments.append(vacancy['salary'])
-    payments = [payment for payment in payments if payment]
+        if vacancy['salary']:
+            payments.append(vacancy['salary'])
     for payment in payments:
         payment_from = payment['from']
         payment_to = payment['to']
@@ -71,7 +71,8 @@ def get_vacancies_statistics_hh(user_agent_hh, languages):
     for language in languages:
         vacancies, vacancies_amount[language] = request_vacancies(language=language, user_agent_hh=user_agent_hh)
         expected_salaries[language] = calculate_expected_salaries(vacancies)
-        average_salaries[language], vacancies_processed[language] = calculate_average_salaries(expected_salaries[language])
+        average_salaries[language], vacancies_processed[language] = calculate_average_salaries(
+            expected_salaries[language])
         hr_statistics_hh[language] = {'vacancies_amount': vacancies_amount[language],
                                       'vacancies_processed': vacancies_processed[language],
                                       'average_salary': average_salaries[language]}
