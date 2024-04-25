@@ -1,9 +1,12 @@
-import math
 import requests
 import logging
 
 
+logger = logging.getLogger('logger')
+
+
 def request_vacancies_sj(app_secret_key_sj: str, language: str):
+    logger.info('Requesting API SJ')
     url = '	https://api.superjob.ru/2.0/vacancies/'
     headers = {'X-Api-App-Id': f'{app_secret_key_sj}'}
     page = 0
@@ -18,11 +21,9 @@ def request_vacancies_sj(app_secret_key_sj: str, language: str):
         page_response = requests.get(url=url, headers=headers, params=params)
         page_response.raise_for_status()
         page_payload = page_response.json()
-        pages_number = math.ceil(page_payload['total'] / vacancies_per_page)
+        pages_number = page_payload['more']
         page += 1
         vacancies.extend(page_payload['objects'])
-        logging.basicConfig(level=logging.INFO)
-        logging.info('Request SJ API')
     return vacancies
 
 

@@ -2,7 +2,11 @@ import requests
 import logging
 
 
+logger = logging.getLogger('logger')
+
+
 def request_vacancies_hh(language: str, user_agent_hh: str):
+    logger.info('Requesting API HH')
     url = 'https://api.hh.ru/vacancies'
     headers = {'User-Agent': user_agent_hh}
     page = 0
@@ -24,8 +28,6 @@ def request_vacancies_hh(language: str, user_agent_hh: str):
         vacancies.extend(page_payload['items'])
         vacancies_amount = page_payload['found']
     response = vacancies, vacancies_amount
-    logging.basicConfig(level=logging.INFO)
-    logging.info('request HH API')
     return response
 
 
