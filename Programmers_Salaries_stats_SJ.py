@@ -1,6 +1,6 @@
 import requests
 import logging
-from Programmers_Salaries_stats_HH import calc_expected_payment
+from Common_functions import calc_expected_payment
 
 logger = logging.getLogger('logger')
 
