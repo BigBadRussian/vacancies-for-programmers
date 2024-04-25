@@ -1,6 +1,6 @@
 import requests
 import logging
-
+from Programmers_Salaries_stats_HH import calc_expected_payment
 
 logger = logging.getLogger('logger')
 
@@ -34,15 +34,7 @@ def calculate_average_salary_sj(vacancies: list):
         payment_from = vacancy['payment_from']
         payment_to = vacancy['payment_to']
         payment_currency = vacancy['currency']
-        if payment_currency != currency:
-            continue
-        if not payment_to:
-            expected_salaries.append(1.2 * payment_from)
-            continue
-        if not payment_from:
-            expected_salaries.append(0.8 * payment_to)
-            continue
-        expected_salaries.append(0.5 * (payment_from + payment_to))
+        calc_expected_payment(currency, payment_currency, payment_from, payment_to, expected_salaries)
     vacancies_processed = len(expected_salaries)
     if vacancies_processed:
         average_salary = round(sum(expected_salaries) / vacancies_processed, 0)
