@@ -45,7 +45,7 @@ def calculate_average_salary_hh(vacancies):
     if vacancies_processed:
         average_salary = round(sum(expected_salaries) / vacancies_processed, 0)
     else:
-        average_salary = 'no vacancies found'
+        average_salary = 'n/d'
     return average_salary, vacancies_processed
 
 
