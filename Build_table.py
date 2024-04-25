@@ -29,7 +29,7 @@ def main():
     app_secret_key_sj = os.environ['APP_SECRET_KEY_SJ']
     languages = ('python', 'javascript', 'java', 'c', 'c++', 'c#', 'ruby', 'rust', 'go', 'php')
     print(build_table(hr_service_statistics=get_vacancies_statistics_hh(user_agent_hh, languages),
-                      title='HeadHunter Moscow'),
+                      title='HeadHunter Moscow'), '\n',
           build_table(hr_service_statistics=get_vacancies_statistics_sj(app_secret_key_sj, languages),
                       title='SuperJob Moscow'))
 
