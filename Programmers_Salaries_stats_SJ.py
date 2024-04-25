@@ -27,7 +27,7 @@ def request_vacancies_sj(app_secret_key_sj: str, language: str):
     return vacancies
 
 
-def calculate_average_salaries_sj(vacancies: list):
+def calculate_average_salary_sj(vacancies: list):
     currency = 'rub'
     expected_salaries = []
     for vacancy in vacancies:
@@ -56,7 +56,7 @@ def get_vacancies_statistics_sj(app_secret_key_sj, languages):
     hr_statistics_sj = {}
     for language in languages:
         vacancies = request_vacancies_sj(app_secret_key_sj, language)
-        average_salary, vacancies_processed = calculate_average_salaries_sj(vacancies)
+        average_salary, vacancies_processed = calculate_average_salary_sj(vacancies)
         hr_statistics_sj[language] = {'vacancies_amount': len(vacancies),
                                       'vacancies_processed': vacancies_processed,
                                       'average_salary': average_salary}
