@@ -8,7 +8,6 @@ from Programmers_Salaries_stats_HH import get_vacancies_statistics_hh
 from Programmers_Salaries_stats_SJ import get_vacancies_statistics_sj
 
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('logger')
 
 
@@ -25,6 +24,7 @@ def build_table(hr_service_statistics: dict, title: str):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO)
     logger.info('start')
     load_dotenv()
     user_agent_hh = os.environ['USER_AGENT_HH']
