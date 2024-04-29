@@ -6,7 +6,7 @@ from Common_functions import calc_expected_payment
 logger = logging.getLogger('logger')
 
 
-def request_vacancies_sj(app_secret_key_sj: str, language: str):
+def request_vacancies_sj(app_secret_key_sj: str, language: str) -> (list, int):
     logger.info('Requesting API SJ')
     url = '	https://api.superjob.ru/2.0/vacancies/'
     headers = {'X-Api-App-Id': f'{app_secret_key_sj}'}
@@ -27,11 +27,10 @@ def request_vacancies_sj(app_secret_key_sj: str, language: str):
         vacancies.extend(page_payload['objects'])
         page += 1
         not_last_page = page_payload['more']
-    response = vacancies, vacancies_amount
-    return response
+    return vacancies, vacancies_amount
 
 
-def calculate_average_salary_sj(vacancies: list):
+def calculate_average_salary_sj(vacancies: list) -> (float, int):
     currency = 'rub'
     expected_salaries = []
     for vacancy in vacancies:
@@ -49,7 +48,7 @@ def calculate_average_salary_sj(vacancies: list):
     return average_salary, vacancies_processed
 
 
-def get_vacancies_statistics_sj(app_secret_key_sj, languages):
+def get_vacancies_statistics_sj(app_secret_key_sj: str, languages: tuple) -> dict:
     hr_statistics_sj = {}
     for language in languages:
         vacancies, vacancies_amount = request_vacancies_sj(app_secret_key_sj, language)

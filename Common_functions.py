@@ -1,4 +1,4 @@
-def calc_expected_payment(currency, payment_currency, payment_from, payment_to):
+def calc_expected_payment(currency: str, payment_currency: str, payment_from: int, payment_to: int):
     if payment_currency != currency:
         expected_payment = None
     elif not payment_to:

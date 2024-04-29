@@ -5,7 +5,7 @@ from Common_functions import calc_expected_payment
 logger = logging.getLogger('logger')
 
 
-def request_vacancies_hh(language: str, user_agent_hh: str):
+def request_vacancies_hh(language: str, user_agent_hh: str) -> (list, int):
     logger.info('Requesting API HH')
     url = 'https://api.hh.ru/vacancies'
     headers = {'User-Agent': user_agent_hh}
@@ -27,11 +27,10 @@ def request_vacancies_hh(language: str, user_agent_hh: str):
         page += 1
         vacancies.extend(page_payload['items'])
         vacancies_amount = page_payload['found']
-    response = vacancies, vacancies_amount
-    return response
+    return vacancies, vacancies_amount
 
 
-def calculate_average_salary_hh(vacancies):
+def calculate_average_salary_hh(vacancies: list) -> (float, int):
     currency = 'RUR'
     expected_salaries: list = []
     for vacancy in vacancies:
@@ -51,7 +50,7 @@ def calculate_average_salary_hh(vacancies):
     return average_salary, vacancies_processed
 
 
-def get_vacancies_statistics_hh(user_agent_hh, languages):
+def get_vacancies_statistics_hh(user_agent_hh: str, languages: tuple) -> dict:
     hr_statistics_hh = {}
     for language in languages:
         vacancies, vacancies_amount = request_vacancies_hh(language, user_agent_hh)
