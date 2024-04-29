@@ -16,7 +16,7 @@ def request_vacancies_sj(app_secret_key_sj: str, language: str) -> (list, int):
     vacancy_lifetime_sj = 0
     vacancies = []
     vacancies_amount = 0
-    logger.info(f'Requesting API HH for {language} vacancies')
+    logger.info(f'Requesting API SJ for {language} vacancies')
     while not_last_page:
         params = {'catalogues': profession_number_sj, 'keyword': language, 'count': f'{vacancies_per_page}',
                   'period': vacancy_lifetime_sj, 'page': page}
