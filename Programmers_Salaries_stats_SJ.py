@@ -11,21 +11,24 @@ def request_vacancies_sj(app_secret_key_sj: str, language: str):
     url = '	https://api.superjob.ru/2.0/vacancies/'
     headers = {'X-Api-App-Id': f'{app_secret_key_sj}'}
     page = 0
-    pages_number = 1
+    not_last_page = True
     vacancies_per_page = 100
     profession_number_sj = 48
     vacancy_lifetime_sj = 0
     vacancies = []
-    while page < pages_number:
+    vacancies_amount = 0
+    while not_last_page:
         params = {'catalogues': profession_number_sj, 'keyword': language, 'count': f'{vacancies_per_page}',
                   'period': vacancy_lifetime_sj, 'page': page}
         page_response = requests.get(url=url, headers=headers, params=params)
         page_response.raise_for_status()
         page_payload = page_response.json()
-        pages_number = page_payload['more']
-        page += 1
+        vacancies_amount = page_payload['total']
         vacancies.extend(page_payload['objects'])
-    return vacancies
+        page += 1
+        not_last_page = page_payload['more']
+    response = vacancies, vacancies_amount
+    return response
 
 
 def calculate_average_salary_sj(vacancies: list):
@@ -48,9 +51,9 @@ def calculate_average_salary_sj(vacancies: list):
 def get_vacancies_statistics_sj(app_secret_key_sj, languages):
     hr_statistics_sj = {}
     for language in languages:
-        vacancies = request_vacancies_sj(app_secret_key_sj, language)
+        vacancies, vacancies_amount = request_vacancies_sj(app_secret_key_sj, language)
         average_salary, vacancies_processed = calculate_average_salary_sj(vacancies)
-        hr_statistics_sj[language] = {'vacancies_amount': len(vacancies),
+        hr_statistics_sj[language] = {'vacancies_amount': vacancies_amount,
                                       'vacancies_processed': vacancies_processed,
                                       'average_salary': average_salary}
     return hr_statistics_sj
