@@ -30,7 +30,7 @@ def request_vacancies_sj(app_secret_key_sj: str, language: str) -> (list, int):
     return vacancies, vacancies_amount
 
 
-def calculate_average_salary_sj(vacancies: list) -> (float, int):
+def calculate_average_salary_sj(vacancies: list) -> (int, int):
     currency = 'rub'
     expected_salaries = []
     for vacancy in vacancies:
@@ -42,7 +42,7 @@ def calculate_average_salary_sj(vacancies: list) -> (float, int):
             expected_salaries.append(expected_payment)
     vacancies_processed = len(expected_salaries)
     if vacancies_processed:
-        average_salary = round(sum(expected_salaries) / vacancies_processed, 0)
+        average_salary = int(round(sum(expected_salaries) / vacancies_processed, 0))
     else:
         average_salary = 'n/d'
     return average_salary, vacancies_processed

@@ -30,7 +30,7 @@ def request_vacancies_hh(language: str, user_agent_hh: str) -> (list, int):
     return vacancies, vacancies_amount
 
 
-def calculate_average_salary_hh(vacancies: list) -> (float, int):
+def calculate_average_salary_hh(vacancies: list) -> (int, int):
     currency = 'RUR'
     expected_salaries: list = []
     for vacancy in vacancies:
@@ -44,7 +44,7 @@ def calculate_average_salary_hh(vacancies: list) -> (float, int):
             expected_salaries.append(expected_payment)
     vacancies_processed = len(expected_salaries)
     if vacancies_processed:
-        average_salary = round(sum(expected_salaries) / vacancies_processed, 0)
+        average_salary = int(round(sum(expected_salaries) / vacancies_processed, 0))
     else:
         average_salary = 'n/d'
     return average_salary, vacancies_processed
