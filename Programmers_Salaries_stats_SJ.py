@@ -39,7 +39,8 @@ def calculate_average_salary_sj(vacancies: list):
         payment_to = vacancy['payment_to']
         payment_currency = vacancy['currency']
         expected_payment = calc_expected_payment(currency, payment_currency, payment_from, payment_to)
-        if expected_payment: expected_salaries.append(expected_payment)
+        if expected_payment:
+            expected_salaries.append(expected_payment)
     vacancies_processed = len(expected_salaries)
     if vacancies_processed:
         average_salary = round(sum(expected_salaries) / vacancies_processed, 0)
