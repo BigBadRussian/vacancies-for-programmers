@@ -7,7 +7,6 @@ logger = logging.getLogger('logger')
 
 
 def request_vacancies_sj(app_secret_key_sj: str, language: str) -> (list, int):
-    logger.info('Requesting API SJ')
     url = '	https://api.superjob.ru/2.0/vacancies/'
     headers = {'X-Api-App-Id': f'{app_secret_key_sj}'}
     page = 0
@@ -17,6 +16,7 @@ def request_vacancies_sj(app_secret_key_sj: str, language: str) -> (list, int):
     vacancy_lifetime_sj = 0
     vacancies = []
     vacancies_amount = 0
+    logger.info(f'Requesting API HH for {language} vacancies')
     while not_last_page:
         params = {'catalogues': profession_number_sj, 'keyword': language, 'count': f'{vacancies_per_page}',
                   'period': vacancy_lifetime_sj, 'page': page}

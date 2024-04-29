@@ -6,7 +6,6 @@ logger = logging.getLogger('logger')
 
 
 def request_vacancies_hh(language: str, user_agent_hh: str) -> (list, int):
-    logger.info('Requesting API HH')
     url = 'https://api.hh.ru/vacancies'
     headers = {'User-Agent': user_agent_hh}
     page = 0
@@ -17,6 +16,7 @@ def request_vacancies_hh(language: str, user_agent_hh: str) -> (list, int):
     searching_area_hh = '1'
     vacancies = []
     vacancies_amount = 0
+    logger.info(f'Requesting API HH for {language} vacancies')
     while page < pages_number:
         params = {'per_page': vacancies_per_page, 'period': vacancy_lifetime_hh, 'page': page,
                   'text': language, 'area': searching_area_hh, 'professional_role': profession_number_hh}
